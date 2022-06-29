@@ -1,0 +1,51 @@
+
+<form [formGroup]="signUpForm" (ngSubmit)="submitForm()">
+  <div class="form-group"  align-self-cente>
+      <label for="exampleInputEmail1">Id</label>
+      <input type="number" class="form-control" id="number" formControlName="id" aria-describedby="emailHelp" placeholder="Enter player id">
+    <label for="exampleInputEmail1">Player Name:</label>
+    <input type="text" class="form-control" id="player" formControlName="playername" aria-describedby="emailHelp" placeholder="Enter player name">
+
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Team:</label>
+    <input type="text" class="form-control" formControlName="team" id="team" placeholder="Enter team name">
+  </div>
+  
+  <button type="submit" *ngIf="addbtn" class="btn btn-primary">Submit</button>
+  <button type="submit" *ngIf="!addbtn" class="btn btn-primary" (click)="updatePlayer()">update</button>
+</form>
+
+
+<div class="form-outline">
+    <label class="form-label" for="form12">Search Player</label>
+    <input type="text" id="form12" class="form-control" (keyup)="searchPlayer()" [(ngModel)]="searchText" />
+ 
+  </div>
+  <br>
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Players</th>
+        <th scope="col">Team</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of playerinfo |  paginate: { itemsPerPage: 2, currentPage: p }">
+      
+        <td>{{player.id}}</td>
+        <td>{{player.playername}}</td>
+        <td>{{player.team}}</td>
+        <td><button (click)="editPlayer(player)" class="btn btn-success">Edit</button></td> 
+        <td><button (click)="deletePlayers(player)" class="btn btn-danger">Delete</button></td>
+      </tr>
+   
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="p = $event"
+ 
+  ></pagination-controls>
